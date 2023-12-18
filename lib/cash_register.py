@@ -28,24 +28,25 @@ class CashRegister:
       last_transaction = self.previous_transactions[-1]
 
       price = last_transaction["price"]
-      self.total -= price
+      
 
       item = last_transaction["item"]
+      assert type(item) == str
       multiplier = last_transaction["multiplier"]
+      self.total -= price * multiplier
 
-      for i in range(multiplier):
+      for _ in range(multiplier):
          self.items.remove(item)
-      
       if len(self.items) == 0:
          self.total = 0.0
       
       self.previous_transactions.pop()
 
-c = CashRegister(10)
+c = CashRegister()
 c.add_item("tomato", 1.76, 2)
 print(c.total)
 print(c.items)
-c.apply_discount()
+# c.apply_discount()
 c.void_last_transaction()
 print(c.total)
 print(c.items)
